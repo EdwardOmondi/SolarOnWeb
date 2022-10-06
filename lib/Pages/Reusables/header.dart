@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:web/reusables.dart';
 
-class Header extends StatelessWidget implements PreferredSizeWidget {
+class Header extends StatelessWidget {
   const Header({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 40),
+      padding:
+          const EdgeInsets.only(left: 50.0, right: 50, top: 40, bottom: 20),
       child: Row(
         children: [
           Image.asset(
@@ -34,6 +35,13 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             child: TextButton(
               onPressed: () {},
               style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(21.0),
+                    // side: BorderSide(color: Colors.red),
+                  ),
+                ),
+                fixedSize: MaterialStateProperty.all(Size(106, 40)),
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                   if (states.contains(MaterialState.hovered)) return kGoldColor;
@@ -55,6 +63,13 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
             child: TextButton(
               onPressed: () {},
               style: ButtonStyle(
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(21.0),
+                    // side: BorderSide(color: Colors.red),
+                  ),
+                ),
+                fixedSize: MaterialStateProperty.all(Size(126, 40)),
                 overlayColor: MaterialStateProperty.resolveWith<Color>(
                     (Set<MaterialState> states) {
                   if (states.contains(MaterialState.hovered)) return kGoldColor;
@@ -93,113 +108,5 @@ class Header extends StatelessWidget implements PreferredSizeWidget {
         ],
       ),
     );
-    // return AppBar(
-    //   backgroundColor: kBackgroundGoldColor,
-    //   elevation: 0,
-    //   title: Row(
-    //     crossAxisAlignment: CrossAxisAlignment.center,
-    //     children: [
-    //       Image.asset(
-    //         'img/SolarOnLogoNoBg.png',
-    //         fit: BoxFit.contain,
-    //         height: 40,
-    //       ),
-    //       SizedBox(
-    //         width: 10,
-    //       ),
-    //       Text(
-    //         'SolarOn',
-    //         style: GoogleFonts.josefinSans(
-    //           fontSize: 32,
-    //           fontWeight: FontWeight.w700, //bold
-    //           color: Colors.black,
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    //   actions: [
-    //     Column(
-    //       children: [
-    //         Expanded(child: Container()),
-    //         ElevatedButton(
-    //           style: ElevatedButton.styleFrom(
-    //             primary: kBackgroundGoldColor,
-    //             shadowColor: kGoldColor,
-    //             fixedSize: Size(90, 40),
-    //             elevation: 0,
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(21), // <-- Radius
-    //             ),
-    //           ),
-    //           onPressed: () {},
-    //           child: Text(
-    //             'Home',
-    //             style: GoogleFonts.josefinSans(
-    //               fontSize: 16,
-    //               fontWeight: FontWeight.w700, //bold
-    //               color: Colors.black,
-    //             ),
-    //           ),
-    //         ),
-    //         Expanded(child: Container()),
-    //       ],
-    //     ),
-    //     Column(
-    //       children: [
-    //         Expanded(child: Container()),
-    //         ElevatedButton(
-    //           style: ElevatedButton.styleFrom(
-    //             primary: kBackgroundGoldColor,
-    //             shadowColor: kGoldColor,
-    //             fixedSize: Size(130, 40),
-    //             elevation: 0,
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(21), // <-- Radius
-    //             ),
-    //           ),
-    //           onPressed: () {},
-    //           child: Text(
-    //             'Contact Us',
-    //             style: GoogleFonts.josefinSans(
-    //               fontSize: 16,
-    //               fontWeight: FontWeight.w700, //bold
-    //               color: Colors.black,
-    //             ),
-    //           ),
-    //         ),
-    //         Expanded(child: Container()),
-    //       ],
-    //     ),
-    //     Column(
-    //       children: [
-    //         Expanded(child: Container()),
-    //         ElevatedButton(
-    //           style: ElevatedButton.styleFrom(
-    //             elevation: 0,
-    //             fixedSize: Size(106, 40),
-    //             primary: kGoldColor,
-    //             shape: RoundedRectangleBorder(
-    //               borderRadius: BorderRadius.circular(21), // <-- Radius
-    //             ),
-    //           ),
-    //           onPressed: () {},
-    //           child: Text(
-    //             'Design',
-    //             style: GoogleFonts.josefinSans(
-    //               fontSize: 16,
-    //               fontWeight: FontWeight.w700, //bold
-    //               color: Colors.black,
-    //             ),
-    //           ),
-    //         ),
-    //         Expanded(child: Container()),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
-
-  @override
-  // TODO: implement preferredSize
-  Size get preferredSize => const Size.fromHeight(80);
 }
