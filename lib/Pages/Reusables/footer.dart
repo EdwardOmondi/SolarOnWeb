@@ -7,7 +7,6 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       color: kDarkBrownColor,
       child: Padding(
