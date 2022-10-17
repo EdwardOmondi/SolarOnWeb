@@ -44,6 +44,7 @@ class ContactusPage extends GetView<ContactUsController> {
                     width: 200,
                     noOfLines: 1,
                     textController: controller.nameController,
+                    inputType: 'Text',
                   ),
                   SizedBox(
                     width: 32,
@@ -54,6 +55,7 @@ class ContactusPage extends GetView<ContactUsController> {
                     width: 250,
                     noOfLines: 1,
                     textController: controller.emailController,
+                    inputType: 'Email',
                   ),
                 ],
               ),
@@ -66,6 +68,7 @@ class ContactusPage extends GetView<ContactUsController> {
                 hintText: "Your Message here...",
                 noOfLines: 3,
                 textController: controller.messageController,
+                inputType: 'Text',
               ),
               SizedBox(
                 height: 32,
@@ -99,6 +102,8 @@ class ContactusPage extends GetView<ContactUsController> {
 }
 
 class InputBox extends GetView<ContactUsController> {
+  final String inputType;
+
   const InputBox({
     Key? key,
     required this.width,
@@ -106,8 +111,7 @@ class InputBox extends GetView<ContactUsController> {
     required this.hintText,
     required this.noOfLines,
     required this.textController,
-    //TODO: SET UP VALIDATION FOR THE TEXTFIELDS
-    // required this.validator,
+    required this.inputType,
   }) : super(key: key);
 
   final double width;
@@ -115,7 +119,6 @@ class InputBox extends GetView<ContactUsController> {
   final String hintText;
   final int noOfLines;
   final TextEditingController textController;
-  // final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +127,12 @@ class InputBox extends GetView<ContactUsController> {
       child: TextFormField(
         controller: textController,
         // validator: validator,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return '*Required';
+          }
+          return null;
+        },
         maxLines: noOfLines,
         textAlignVertical: TextAlignVertical.top,
         decoration: InputDecoration(
@@ -175,9 +184,9 @@ class ContactUsController extends GetxController {
               nameController.text, emailController.text, messageController.text)
           .then((auth) {
         if (auth) {
-          Get.snackbar('Submit', 'Submitted successfully');
+          Get.snackbar('Success', 'Submitted successfully');
         } else {
-          Get.snackbar('Login', 'Invalid email or password');
+          Get.snackbar('Failed', 'Something went wrong');
         }
       });
     }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../reusables.dart';
 import 'Reusables/standard_page.dart';
 
 class Index extends StatelessWidget {
@@ -43,20 +42,23 @@ class Index extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   elevation: 0,
-                  fixedSize: Size(212, 80),
+                  // fixedSize: Size(212, 80),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(41), // <-- Radius
+                    borderRadius: BorderRadius.circular(101), // <-- Radius
                   ),
                 ),
                 onPressed: () {
                   Get.toNamed("/design");
                 },
-                child: Text(
-                  'Design',
-                  style: GoogleFonts.josefinSans(
-                    fontSize: 32,
-                    fontWeight: FontWeight.w700, //bold
-                    color: Colors.black,
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Text(
+                    'Design',
+                    style: GoogleFonts.josefinSans(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w700, //bold
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
