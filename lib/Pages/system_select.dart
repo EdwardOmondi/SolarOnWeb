@@ -18,6 +18,8 @@ class SystemSelectPage extends StatelessWidget {
   );
 
   final double textHeight = 25;
+  final SystemSelectPageController systemSelectPageController =
+      Get.put(SystemSelectPageController());
   @override
   Widget build(BuildContext context) {
     return StandardPage(
@@ -46,6 +48,12 @@ class SystemSelectPage extends StatelessWidget {
                     SystemTypeLink(
                       text: "Domestic (Easy)",
                       textstyle: textstyle,
+                      onPressed: () {
+                        systemSelectPageController
+                            .changeVisibility("Domestic (Easy)");
+                        // systemSelectPageController
+                        //     .getMessage("Domestic (Easy)");
+                      },
                     ),
                     SizedBox(
                       height: textHeight,
@@ -53,6 +61,12 @@ class SystemSelectPage extends StatelessWidget {
                     SystemTypeLink(
                       text: "Domestic (Custom)",
                       textstyle: textstyle,
+                      onPressed: () {
+                        systemSelectPageController
+                            .changeVisibility("Domestic (Custom)");
+                        // systemSelectPageController
+                        //     .getMessage("Domestic (Custom)");
+                      },
                     ),
                     SizedBox(
                       height: textHeight,
@@ -60,6 +74,12 @@ class SystemSelectPage extends StatelessWidget {
                     SystemTypeLink(
                       text: "Commercial (Easy)",
                       textstyle: textstyle,
+                      onPressed: () {
+                        systemSelectPageController
+                            .changeVisibility("Commercial (Easy)");
+                        // systemSelectPageController
+                        //     .getMessage("Commercial (Easy)");
+                      },
                     ),
                     SizedBox(
                       height: textHeight,
@@ -67,6 +87,12 @@ class SystemSelectPage extends StatelessWidget {
                     SystemTypeLink(
                       text: "Commercial (Custom)",
                       textstyle: textstyle,
+                      onPressed: () {
+                        systemSelectPageController
+                            .changeVisibility("Commercial (Custom)");
+                        // systemSelectPageController
+                        //     .getMessage("Commercial (Custom)");
+                      },
                     ),
                     SizedBox(
                       height: textHeight,
@@ -74,6 +100,12 @@ class SystemSelectPage extends StatelessWidget {
                     SystemTypeLink(
                       text: "Industrial (Easy)",
                       textstyle: textstyle,
+                      onPressed: () {
+                        systemSelectPageController
+                            .changeVisibility("Industrial (Easy)");
+                        // systemSelectPageController
+                        //     .getMessage("Industrial (Easy)");
+                      },
                     ),
                     SizedBox(
                       height: textHeight,
@@ -81,6 +113,12 @@ class SystemSelectPage extends StatelessWidget {
                     SystemTypeLink(
                       text: "Industrial (Custom)",
                       textstyle: textstyle,
+                      onPressed: () {
+                        systemSelectPageController
+                            .changeVisibility("Industrial (Custom)");
+                        // systemSelectPageController
+                        //     .getMessage("Industrial (Custom)");
+                      },
                     ),
                     SizedBox(
                       height: textHeight,
@@ -90,63 +128,62 @@ class SystemSelectPage extends StatelessWidget {
                 SizedBox(
                   width: 20,
                 ),
-                //TODO: MAKE VISIBILITY CHANGE DYNAMICALLY ON BUTTON CLICK
-                Visibility(
-                  child: Container(
-                    padding: const EdgeInsets.all(32.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      // color: Colors.yellow[100],
-                      border: Border.all(
-                        color: kGoldColor,
+                Obx(
+                  () => Visibility(
+                    visible: systemSelectPageController.visibility.value,
+                    child: Container(
+                      padding: const EdgeInsets.all(32.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        // color: Colors.yellow[100],
+                        border: Border.all(
+                          color: kGoldColor,
+                        ),
                       ),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "For HOME use only. (e.g. Individual "
-                          "homes and houses)\nThis is for those who have very "
-                          "limited experience with solar systems.\nOnly key in "
-                          "the electrical items you want to be powered by the "
-                          "solar system. ",
-                          style: GoogleFonts.lato(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500, //bold
-                            color: kBlackColor,
-                            height: 2,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 32,
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            // fixedSize: Size(154, 40),
-                            shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(41), // <-- Radius
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            //TODO: MAKE TEXT CHANGE DYNAMICALLY
+                            systemSelectPageController.data.value,
+                            style: GoogleFonts.lato(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500, //bold
+                              color: kBlackColor,
+                              height: 2,
                             ),
                           ),
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Text(
-                              'Start',
-                              style: GoogleFonts.josefinSans(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700, //bold
-                                color: Colors.black,
+                          SizedBox(
+                            height: 32,
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              // fixedSize: Size(154, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(41), // <-- Radius
+                              ),
+                            ),
+                            onPressed: () {},
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                'Start',
+                                style: GoogleFonts.josefinSans(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700, //bold
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ],
@@ -157,16 +194,21 @@ class SystemSelectPage extends StatelessWidget {
 }
 
 class SystemTypeLink extends StatelessWidget {
-  const SystemTypeLink({Key? key, required this.textstyle, required this.text})
-      : super(key: key);
+  const SystemTypeLink({
+    Key? key,
+    required this.textstyle,
+    required this.text,
+    required this.onPressed,
+  }) : super(key: key);
 
   final TextStyle textstyle;
   final String text;
+  final Null Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
       child: Row(
         children: [
           Text(
@@ -183,5 +225,87 @@ class SystemTypeLink extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class SystemSelectPageController extends GetxController {
+  var visibility = false.obs;
+  var data = "".obs;
+  var initialValue = "";
+  var currentValue = "";
+
+  changeVisibility(String selection) {
+    currentValue = selection;
+    if (visibility.value && initialValue != currentValue) {
+      getMessage(selection);
+      initialValue = selection;
+    } else {
+      visibility.value = !visibility.value;
+      getMessage(selection);
+    }
+  }
+
+  getMessage(String selection) {
+    switch (selection) {
+      case "Domestic (Easy)":
+        {
+          data.value = "For HOME use only. (e.g. Individual homes "
+              "and houses)\nThis is for those who have very "
+              "limited experience designing solar systems.\nOnly key in "
+              "the electrical items you want to be powered by the "
+              "solar system. ";
+        }
+        break;
+      case "Domestic (Custom)":
+        {
+          data.value = "For HOME use only. (e.g. Individual homes "
+              "and houses)\nThis is for those who have proper "
+              "experience designing solar systems.\nOnly key in "
+              "the electrical items you want to be powered by the "
+              "solar system. ";
+        }
+        break;
+      case "Commercial (Easy)":
+        {
+          data.value = "For COMMERCIAL use only. (e.g. Office "
+              "buildings)\nThis is for those who have very "
+              "limited experience with solar systems.\nOnly key in "
+              "the electrical items you want to be powered by the "
+              "solar system. ";
+        }
+        break;
+      case "Commercial (Custom)":
+        {
+          data.value = "For COMMERCIAL use only. (e.g. Office "
+              "buildings)\nThis is for those who have proper "
+              "experience designing solar systems.\nOnly key in "
+              "the electrical items you want to be powered by the "
+              "solar system. ";
+        }
+        break;
+      case "Industrial (Easy)":
+        {
+          data.value = "For INDUSTRIAL use only. (e.g. Factories and "
+              "plants)\nThis is for those who have very "
+              "limited experience with solar systems.\nOnly key in "
+              "the electrical items you want to be powered by the "
+              "solar system. ";
+        }
+        break;
+      case "Industrial (Custom)":
+        {
+          data.value = "For INDUSTRIAL use only. (e.g. Factories and "
+              "plants)\nThis is for those who have proper "
+              "experience designing solar systems.\nOnly key in "
+              "the electrical items you want to be powered by the "
+              "solar system. ";
+        }
+        break;
+      default:
+        {
+          data.value = "Please select a category to start designing";
+        }
+        break;
+    }
   }
 }
