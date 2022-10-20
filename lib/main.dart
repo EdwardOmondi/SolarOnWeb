@@ -5,6 +5,7 @@ import 'package:web/reusables.dart';
 
 import 'Pages/Reusables/unknown.dart';
 import 'Pages/contact_us.dart';
+import 'Pages/system_easy.dart';
 import 'Pages/system_select.dart';
 
 void main() {
@@ -33,12 +34,18 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/design',
           page: () => SystemSelectPage(),
+          binding: SystemSelectPageBinding(),
         ),
         GetPage(
           name: '/contact',
           page: () => ContactusPage(),
           binding: ContactUsBinding(),
           // transition: Transition.zoom,
+        ),
+        GetPage(
+          name: '/easy',
+          page: () => SystemEasyPage(),
+          binding: SystemEasyPageBinding(),
         ),
       ],
       unknownRoute: GetPage(name: '/notfound', page: () => UnknownPage()),

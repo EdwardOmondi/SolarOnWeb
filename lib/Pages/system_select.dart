@@ -4,13 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:web/reusables.dart';
 import 'Reusables/standard_page.dart';
 
-class SystemSelectPage extends StatelessWidget {
+class SystemSelectPage extends GetView<SystemSelectPageController> {
   SystemSelectPage({Key? key}) : super(key: key);
-  final TextStyle textstyle = GoogleFonts.josefinSans(
-    fontSize: 32,
-    fontWeight: FontWeight.w700, //bold
-    color: kBlackColor,
-  );
+
   final TextStyle textstyleInactive = GoogleFonts.josefinSans(
     fontSize: 32,
     fontWeight: FontWeight.w700, //bold
@@ -18,8 +14,7 @@ class SystemSelectPage extends StatelessWidget {
   );
 
   final double textHeight = 25;
-  final SystemSelectPageController systemSelectPageController =
-      Get.put(SystemSelectPageController());
+
   @override
   Widget build(BuildContext context) {
     return StandardPage(
@@ -34,7 +29,7 @@ class SystemSelectPage extends StatelessWidget {
             ),
             Text(
               'Kindly choose the kind of system you want to design',
-              style: textstyle,
+              style: kH2TextStyle,
             ),
             SizedBox(
               height: textHeight * 2,
@@ -47,12 +42,9 @@ class SystemSelectPage extends StatelessWidget {
                   children: [
                     SystemTypeLink(
                       text: "Domestic (Easy)",
-                      textstyle: textstyle,
+                      textstyle: kH2TextStyle,
                       onPressed: () {
-                        systemSelectPageController
-                            .changeVisibility("Domestic (Easy)");
-                        // systemSelectPageController
-                        //     .getMessage("Domestic (Easy)");
+                        controller.changeVisibility("Domestic (Easy)");
                       },
                     ),
                     SizedBox(
@@ -60,12 +52,9 @@ class SystemSelectPage extends StatelessWidget {
                     ),
                     SystemTypeLink(
                       text: "Domestic (Custom)",
-                      textstyle: textstyle,
+                      textstyle: kH2TextStyle,
                       onPressed: () {
-                        systemSelectPageController
-                            .changeVisibility("Domestic (Custom)");
-                        // systemSelectPageController
-                        //     .getMessage("Domestic (Custom)");
+                        controller.changeVisibility("Domestic (Custom)");
                       },
                     ),
                     SizedBox(
@@ -73,12 +62,9 @@ class SystemSelectPage extends StatelessWidget {
                     ),
                     SystemTypeLink(
                       text: "Commercial (Easy)",
-                      textstyle: textstyle,
+                      textstyle: kH2TextStyle,
                       onPressed: () {
-                        systemSelectPageController
-                            .changeVisibility("Commercial (Easy)");
-                        // systemSelectPageController
-                        //     .getMessage("Commercial (Easy)");
+                        controller.changeVisibility("Commercial (Easy)");
                       },
                     ),
                     SizedBox(
@@ -86,12 +72,9 @@ class SystemSelectPage extends StatelessWidget {
                     ),
                     SystemTypeLink(
                       text: "Commercial (Custom)",
-                      textstyle: textstyle,
+                      textstyle: kH2TextStyle,
                       onPressed: () {
-                        systemSelectPageController
-                            .changeVisibility("Commercial (Custom)");
-                        // systemSelectPageController
-                        //     .getMessage("Commercial (Custom)");
+                        controller.changeVisibility("Commercial (Custom)");
                       },
                     ),
                     SizedBox(
@@ -99,12 +82,9 @@ class SystemSelectPage extends StatelessWidget {
                     ),
                     SystemTypeLink(
                       text: "Industrial (Easy)",
-                      textstyle: textstyle,
+                      textstyle: kH2TextStyle,
                       onPressed: () {
-                        systemSelectPageController
-                            .changeVisibility("Industrial (Easy)");
-                        // systemSelectPageController
-                        //     .getMessage("Industrial (Easy)");
+                        controller.changeVisibility("Industrial (Easy)");
                       },
                     ),
                     SizedBox(
@@ -112,12 +92,9 @@ class SystemSelectPage extends StatelessWidget {
                     ),
                     SystemTypeLink(
                       text: "Industrial (Custom)",
-                      textstyle: textstyle,
+                      textstyle: kH2TextStyle,
                       onPressed: () {
-                        systemSelectPageController
-                            .changeVisibility("Industrial (Custom)");
-                        // systemSelectPageController
-                        //     .getMessage("Industrial (Custom)");
+                        controller.changeVisibility("Industrial (Custom)");
                       },
                     ),
                     SizedBox(
@@ -130,12 +107,11 @@ class SystemSelectPage extends StatelessWidget {
                 ),
                 Obx(
                   () => Visibility(
-                    visible: systemSelectPageController.visibility.value,
+                    visible: controller.visibility.value,
                     child: Container(
                       padding: const EdgeInsets.all(32.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
-                        // color: Colors.yellow[100],
                         border: Border.all(
                           color: kGoldColor,
                         ),
@@ -145,8 +121,7 @@ class SystemSelectPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            //TODO: MAKE TEXT CHANGE DYNAMICALLY
-                            systemSelectPageController.data.value,
+                            controller.data.value,
                             style: GoogleFonts.lato(
                               fontSize: 18,
                               fontWeight: FontWeight.w500, //bold
@@ -166,7 +141,16 @@ class SystemSelectPage extends StatelessWidget {
                                     BorderRadius.circular(41), // <-- Radius
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              String selected = controller.selectedPage.value;
+                              if (selected.endsWith("asy")) {
+                                print(selected);
+                                Get.toNamed("/easy");
+                              }
+                              if (selected.endsWith("ustom")) {
+                                print(selected);
+                              }
+                            },
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Text(
@@ -190,6 +174,13 @@ class SystemSelectPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SystemSelectPageBinding implements Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => SystemSelectPageController());
   }
 }
 
@@ -233,6 +224,7 @@ class SystemSelectPageController extends GetxController {
   var data = "".obs;
   var initialValue = "";
   var currentValue = "";
+  var selectedPage = "".obs;
 
   changeVisibility(String selection) {
     currentValue = selection;
@@ -249,6 +241,7 @@ class SystemSelectPageController extends GetxController {
     switch (selection) {
       case "Domestic (Easy)":
         {
+          selectedPage.value = "Domestic Easy";
           data.value = "For HOME use only. (e.g. Individual homes "
               "and houses)\nThis is for those who have very "
               "limited experience designing solar systems.\nOnly key in "
@@ -258,6 +251,7 @@ class SystemSelectPageController extends GetxController {
         break;
       case "Domestic (Custom)":
         {
+          selectedPage.value = "Domestic Custom";
           data.value = "For HOME use only. (e.g. Individual homes "
               "and houses)\nThis is for those who have proper "
               "experience designing solar systems.\nOnly key in "
@@ -267,6 +261,7 @@ class SystemSelectPageController extends GetxController {
         break;
       case "Commercial (Easy)":
         {
+          selectedPage.value = "Commercial Easy";
           data.value = "For COMMERCIAL use only. (e.g. Office "
               "buildings)\nThis is for those who have very "
               "limited experience with solar systems.\nOnly key in "
@@ -276,6 +271,7 @@ class SystemSelectPageController extends GetxController {
         break;
       case "Commercial (Custom)":
         {
+          selectedPage.value = "Commercial Custom";
           data.value = "For COMMERCIAL use only. (e.g. Office "
               "buildings)\nThis is for those who have proper "
               "experience designing solar systems.\nOnly key in "
@@ -285,6 +281,7 @@ class SystemSelectPageController extends GetxController {
         break;
       case "Industrial (Easy)":
         {
+          selectedPage.value = "Industrial Easy";
           data.value = "For INDUSTRIAL use only. (e.g. Factories and "
               "plants)\nThis is for those who have very "
               "limited experience with solar systems.\nOnly key in "
@@ -294,6 +291,7 @@ class SystemSelectPageController extends GetxController {
         break;
       case "Industrial (Custom)":
         {
+          selectedPage.value = "Industrial Custom";
           data.value = "For INDUSTRIAL use only. (e.g. Factories and "
               "plants)\nThis is for those who have proper "
               "experience designing solar systems.\nOnly key in "
