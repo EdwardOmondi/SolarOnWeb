@@ -66,7 +66,7 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                     hintText: "e.g. 5 W",
                     noOfLines: 1,
                     textController: controller.powerController,
-                    inputType: "Number",
+                    inputType: "Double",
                   ),
                   InputBox(
                     width: 150,
@@ -74,7 +74,7 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                     hintText: "e.g. 0.5 Hrs",
                     noOfLines: 1,
                     textController: controller.timeController,
-                    inputType: "Number",
+                    inputType: "Double",
                   ),
                   SizedBox(
                     width: 22,
@@ -176,7 +176,7 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                               },
                               icon: Icon(
                                 Icons.delete_outlined,
-                                color: kBlackColor,
+                                color: kInactiveColor,
                               ),
                             )
                           ],
@@ -223,6 +223,18 @@ class InputBox extends GetView<SystemEasyPageController> {
           validator: (value) {
             if (value == null || value.isEmpty) {
               return '* This field is Required';
+            } else if (inputType == "Text") {
+              if (!RegExp(r'^[A-Za-z]+$').hasMatch(value)) {
+                return '* Only Letters please';
+              }
+            } else if (inputType == "Number") {
+              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                return '* Only Numbers please';
+              }
+            } else if (inputType == "Double") {
+              if (!RegExp(r'^[0-9_.]+$').hasMatch(value)) {
+                return '* Only Decimal point numbers please';
+              }
             }
             return null;
           },
