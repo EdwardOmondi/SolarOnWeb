@@ -18,3 +18,7 @@ final kParagraphStyle = GoogleFonts.lato(
   fontWeight: FontWeight.w400, //bold
   color: kBlackColor,
 );
+final kNormalTextStyle = GoogleFonts.lato(
+  fontSize: 16,
+  fontWeight: FontWeight.normal,
+);

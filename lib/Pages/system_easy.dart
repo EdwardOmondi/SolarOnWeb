@@ -11,6 +11,8 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
 
   final SystemSelectPageController systemSelectPageController =
       Get.put(SystemSelectPageController());
+  final AppliancesController appliancesController =
+      Get.put(AppliancesController());
 
   @override
   Widget build(BuildContext context) {
@@ -88,13 +90,14 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                               double.parse(controller.powerController.text),
                           time: double.parse(controller.timeController.text),
                         );
-                        print(appliance);
+                        appliancesController.addApliance(appliance);
                       } else {
                         print("Input values");
                       }
                     },
                     icon: Icon(
                       Icons.add_circle_outline_outlined,
+                      color: kBlackColor,
                     ),
                   )
                 ],
@@ -109,6 +112,77 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                 width: 909,
                 height: 2.5,
                 color: kInactiveColor,
+              ),
+            ),
+            Flexible(
+              child: GetBuilder<AppliancesController>(
+                builder: (controller) => ListView.builder(
+                    itemCount: controller.appliances.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 25.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              "${index + 1}. ",
+                              style: kNormalTextStyle,
+                            ),
+                            SizedBox(
+                              width: 13,
+                            ),
+                            SizedBox(
+                              width: 250,
+                              child: Text(
+                                controller.appliances[index].item,
+                                style: kNormalTextStyle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                "${controller.appliances[index].qty}",
+                                style: kNormalTextStyle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                "${controller.appliances[index].powerRating}",
+                                style: kNormalTextStyle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            SizedBox(
+                              width: 150,
+                              child: Text(
+                                "${controller.appliances[index].time}",
+                                style: kNormalTextStyle,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                controller.removeAppliance(index);
+                              },
+                              icon: Icon(
+                                Icons.delete_outlined,
+                                color: kBlackColor,
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    }),
               ),
             ),
           ],
@@ -185,6 +259,21 @@ class SystemEasyPageController extends GetxController {
   final timeController = TextEditingController();
 }
 
+class AppliancesController extends GetxController {
+  List<Appliance> appliances = [
+    Appliance(item: "Item", qty: 1, powerRating: 1, time: 1)
+  ];
+  addApliance(Appliance appliance) {
+    appliances.add(appliance);
+    update();
+  }
+
+  removeAppliance(int index) {
+    appliances.removeAt(index);
+    update();
+  }
+}
+
 class Appliance {
   final String item;
   final int qty;
@@ -200,7 +289,7 @@ class Appliance {
 
   @override
   String toString() {
-    return "item: $item, qty: $qty, "
-        "power: $powerRating, time: $time";
+    return "(item: $item, qty: $qty, "
+        "power: $powerRating, time: $time)";
   }
 }
