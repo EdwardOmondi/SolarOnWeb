@@ -92,7 +92,7 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                         );
                         appliancesController.addApliance(appliance);
                       } else {
-                        print("Input values");
+                        Get.snackbar("Error", "Kindly Check your inputs");
                       }
                     },
                     icon: Icon(
@@ -185,6 +185,40 @@ class SystemEasyPage extends GetView<SystemEasyPageController> {
                     }),
               ),
             ),
+            SizedBox(
+              height: 25,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                fixedSize: Size(160, 60),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(101), // <-- Radius
+                ),
+              ),
+              onPressed: () {
+                Map<String, double> result = appliancesController.calculate();
+                if (result["watts"] == 0) {
+                  Get.snackbar("Error", "No items were added");
+                } else {
+                  Get.toNamed("/result", arguments: result);
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: Text(
+                  'Submit',
+                  style: GoogleFonts.josefinSans(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700, //bold
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 55,
+            ),
           ],
         ),
       ),
@@ -225,15 +259,15 @@ class InputBox extends GetView<SystemEasyPageController> {
               return '* This field is Required';
             } else if (inputType == "Text") {
               if (!RegExp(r'^[A-Za-z]+$').hasMatch(value)) {
-                return '* Only Letters please';
+                return '* Only letters please';
               }
             } else if (inputType == "Number") {
               if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                return '* Only Numbers please';
+                return '* Whole numbers please';
               }
             } else if (inputType == "Double") {
               if (!RegExp(r'^[0-9_.]+$').hasMatch(value)) {
-                return '* Only Decimal point numbers please';
+                return '* Only numbers please';
               }
             }
             return null;
@@ -272,9 +306,7 @@ class SystemEasyPageController extends GetxController {
 }
 
 class AppliancesController extends GetxController {
-  List<Appliance> appliances = [
-    Appliance(item: "Item", qty: 1, powerRating: 1, time: 1)
-  ];
+  List<Appliance> appliances = [];
   addApliance(Appliance appliance) {
     appliances.add(appliance);
     update();
@@ -284,24 +316,15 @@ class AppliancesController extends GetxController {
     appliances.removeAt(index);
     update();
   }
-}
 
-class Appliance {
-  final String item;
-  final int qty;
-  final double powerRating;
-  final double time;
-
-  Appliance({
-    required this.item,
-    required this.qty,
-    required this.powerRating,
-    required this.time,
-  });
-
-  @override
-  String toString() {
-    return "(item: $item, qty: $qty, "
-        "power: $powerRating, time: $time)";
+  Map<String, double> calculate() {
+    double watts = 0;
+    double wattHours = 0;
+    for (var appliance in appliances) {
+      watts += appliance.powerRating * appliance.qty;
+      wattHours += appliance.powerRating * appliance.qty * appliance.time;
+      print("Watts: $watts\n  Wh: $wattHours");
+    }
+    return {"watts": watts, "wattHours": wattHours};
   }
 }

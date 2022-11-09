@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web/Pages/index.dart';
+import 'package:web/Pages/system_result.dart';
 import 'package:web/reusables.dart';
 
 import 'Pages/Reusables/unknown.dart';
@@ -46,6 +47,10 @@ class MyApp extends StatelessWidget {
           name: '/easy',
           page: () => SystemEasyPage(),
           binding: SystemEasyPageBinding(),
+        ),
+        GetPage(
+          name: '/result',
+          page: () => SystemResultsPage(),
         ),
       ],
       unknownRoute: GetPage(name: '/notfound', page: () => UnknownPage()),

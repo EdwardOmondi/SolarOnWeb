@@ -22,3 +22,23 @@ final kNormalTextStyle = GoogleFonts.lato(
   fontSize: 16,
   fontWeight: FontWeight.normal,
 );
+
+class Appliance {
+  final String item;
+  final int qty;
+  final double powerRating;
+  final double time;
+
+  Appliance({
+    required this.item,
+    required this.qty,
+    required this.powerRating,
+    required this.time,
+  });
+
+  @override
+  String toString() {
+    return "(item: $item, qty: $qty, "
+        "power: $powerRating, time: $time)";
+  }
+}
