@@ -51,6 +51,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/result',
           page: () => SystemResultsPage(),
+          binding: SystemResultPageBinding(),
         ),
       ],
       unknownRoute: GetPage(name: '/notfound', page: () => UnknownPage()),

@@ -14,87 +14,84 @@ class ContactusPage extends GetView<ContactUsController> {
   Widget build(BuildContext context) {
     return StandardPage(
       crossAxisAlignment: CrossAxisAlignment.start,
-      pageBody: SizedBox(
-        height: MediaQuery.of(context).size.height - 100,
-        child: Form(
-          key: controller.contactUsFormKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 16 * 3,
+      pageBody: Form(
+        key: controller.contactUsFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 16 * 3,
+            ),
+            Text(
+              'Kindly leave us a message and someone in our team will reach out \nas soon as possible',
+              style: GoogleFonts.josefinSans(
+                fontSize: 32,
+                height: 2,
+                fontWeight: FontWeight.w700, //bold
+                color: Colors.black,
               ),
-              Text(
-                'Kindly leave us a message and someone in our team will reach out \nas soon as possible',
+            ),
+            SizedBox(
+              height: 42,
+            ),
+            Row(
+              children: [
+                InputBox(
+                  hintText: 'Enter your Name',
+                  labelText: 'Your Name',
+                  width: 200,
+                  noOfLines: 1,
+                  textController: controller.nameController,
+                  inputType: 'Text',
+                ),
+                SizedBox(
+                  width: 32,
+                ),
+                InputBox(
+                  hintText: 'Enter your Email',
+                  labelText: 'Your Email Address',
+                  width: 250,
+                  noOfLines: 1,
+                  textController: controller.emailController,
+                  inputType: 'Email',
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            InputBox(
+              width: 482,
+              labelText: "Message ",
+              hintText: "Your Message here...",
+              noOfLines: 3,
+              textController: controller.messageController,
+              inputType: 'Text',
+            ),
+            SizedBox(
+              height: 32,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                fixedSize: Size(106, 40),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(41), // <-- Radius
+                ),
+              ),
+              onPressed: () {
+                controller.login();
+              },
+              child: Text(
+                'Submit',
                 style: GoogleFonts.josefinSans(
-                  fontSize: 32,
-                  height: 2,
+                  fontSize: 16,
                   fontWeight: FontWeight.w700, //bold
                   color: Colors.black,
                 ),
               ),
-              SizedBox(
-                height: 42,
-              ),
-              Row(
-                children: [
-                  InputBox(
-                    hintText: 'Enter your Name',
-                    labelText: 'Your Name',
-                    width: 200,
-                    noOfLines: 1,
-                    textController: controller.nameController,
-                    inputType: 'Text',
-                  ),
-                  SizedBox(
-                    width: 32,
-                  ),
-                  InputBox(
-                    hintText: 'Enter your Email',
-                    labelText: 'Your Email Address',
-                    width: 250,
-                    noOfLines: 1,
-                    textController: controller.emailController,
-                    inputType: 'Email',
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              InputBox(
-                width: 482,
-                labelText: "Message ",
-                hintText: "Your Message here...",
-                noOfLines: 3,
-                textController: controller.messageController,
-                inputType: 'Text',
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  fixedSize: Size(106, 40),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(41), // <-- Radius
-                  ),
-                ),
-                onPressed: () {
-                  controller.login();
-                },
-                child: Text(
-                  'Submit',
-                  style: GoogleFonts.josefinSans(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700, //bold
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

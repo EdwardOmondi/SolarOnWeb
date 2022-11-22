@@ -19,159 +19,156 @@ class SystemSelectPage extends GetView<SystemSelectPageController> {
   Widget build(BuildContext context) {
     return StandardPage(
       crossAxisAlignment: CrossAxisAlignment.start,
-      pageBody: SizedBox(
-        height: MediaQuery.of(context).size.height - 100,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: textHeight * 3,
-            ),
-            Text(
-              'Kindly choose the kind of system you want to design',
-              style: kH2TextStyle,
-            ),
-            SizedBox(
-              height: textHeight * 2,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SystemTypeLink(
-                      text: "Domestic (Easy)",
-                      textstyle: kH2TextStyle,
-                      onPressed: () {
-                        controller.changeVisibility("Domestic (Easy)");
-                      },
+      pageBody: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: textHeight * 3,
+          ),
+          Text(
+            'Kindly choose the kind of system you want to design',
+            style: kH2TextStyle,
+          ),
+          SizedBox(
+            height: textHeight * 2,
+          ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SystemTypeLink(
+                    text: "Domestic (Easy)",
+                    textstyle: kH2TextStyle,
+                    onPressed: () {
+                      controller.changeVisibility("Domestic (Easy)");
+                    },
+                  ),
+                  SizedBox(
+                    height: textHeight,
+                  ),
+                  SystemTypeLink(
+                    text: "Domestic (Custom)",
+                    textstyle: kH2TextStyle,
+                    onPressed: () {
+                      controller.changeVisibility("Domestic (Custom)");
+                    },
+                  ),
+                  SizedBox(
+                    height: textHeight,
+                  ),
+                  SystemTypeLink(
+                    text: "Commercial (Easy)",
+                    textstyle: kH2TextStyle,
+                    onPressed: () {
+                      controller.changeVisibility("Commercial (Easy)");
+                    },
+                  ),
+                  SizedBox(
+                    height: textHeight,
+                  ),
+                  SystemTypeLink(
+                    text: "Commercial (Custom)",
+                    textstyle: kH2TextStyle,
+                    onPressed: () {
+                      controller.changeVisibility("Commercial (Custom)");
+                    },
+                  ),
+                  SizedBox(
+                    height: textHeight,
+                  ),
+                  SystemTypeLink(
+                    text: "Industrial (Easy)",
+                    textstyle: kH2TextStyle,
+                    onPressed: () {
+                      controller.changeVisibility("Industrial (Easy)");
+                    },
+                  ),
+                  SizedBox(
+                    height: textHeight,
+                  ),
+                  SystemTypeLink(
+                    text: "Industrial (Custom)",
+                    textstyle: kH2TextStyle,
+                    onPressed: () {
+                      controller.changeVisibility("Industrial (Custom)");
+                    },
+                  ),
+                  SizedBox(
+                    height: textHeight,
+                  ),
+                ],
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Obx(
+                () => Visibility(
+                  visible: controller.visibility.value,
+                  child: Container(
+                    padding: const EdgeInsets.all(32.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                        color: kGoldColor,
+                      ),
                     ),
-                    SizedBox(
-                      height: textHeight,
-                    ),
-                    SystemTypeLink(
-                      text: "Domestic (Custom)",
-                      textstyle: kH2TextStyle,
-                      onPressed: () {
-                        controller.changeVisibility("Domestic (Custom)");
-                      },
-                    ),
-                    SizedBox(
-                      height: textHeight,
-                    ),
-                    SystemTypeLink(
-                      text: "Commercial (Easy)",
-                      textstyle: kH2TextStyle,
-                      onPressed: () {
-                        controller.changeVisibility("Commercial (Easy)");
-                      },
-                    ),
-                    SizedBox(
-                      height: textHeight,
-                    ),
-                    SystemTypeLink(
-                      text: "Commercial (Custom)",
-                      textstyle: kH2TextStyle,
-                      onPressed: () {
-                        controller.changeVisibility("Commercial (Custom)");
-                      },
-                    ),
-                    SizedBox(
-                      height: textHeight,
-                    ),
-                    SystemTypeLink(
-                      text: "Industrial (Easy)",
-                      textstyle: kH2TextStyle,
-                      onPressed: () {
-                        controller.changeVisibility("Industrial (Easy)");
-                      },
-                    ),
-                    SizedBox(
-                      height: textHeight,
-                    ),
-                    SystemTypeLink(
-                      text: "Industrial (Custom)",
-                      textstyle: kH2TextStyle,
-                      onPressed: () {
-                        controller.changeVisibility("Industrial (Custom)");
-                      },
-                    ),
-                    SizedBox(
-                      height: textHeight,
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Obx(
-                  () => Visibility(
-                    visible: controller.visibility.value,
-                    child: Container(
-                      padding: const EdgeInsets.all(32.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          color: kGoldColor,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          controller.data.value,
+                          style: GoogleFonts.lato(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500, //bold
+                            color: kBlackColor,
+                            height: 2,
+                          ),
                         ),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            controller.data.value,
-                            style: GoogleFonts.lato(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500, //bold
-                              color: kBlackColor,
-                              height: 2,
+                        SizedBox(
+                          height: 32,
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            // fixedSize: Size(154, 40),
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(41), // <-- Radius
                             ),
                           ),
-                          SizedBox(
-                            height: 32,
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              // fixedSize: Size(154, 40),
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(41), // <-- Radius
-                              ),
-                            ),
-                            onPressed: () {
-                              String selected = controller.selectedPage.value;
-                              if (selected.endsWith("asy")) {
-                                print(selected);
-                                Get.toNamed("/easy");
-                              }
-                              if (selected.endsWith("ustom")) {
-                                print(selected);
-                              }
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Text(
-                                'Start',
-                                style: GoogleFonts.josefinSans(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700, //bold
-                                  color: Colors.black,
-                                ),
+                          onPressed: () {
+                            String selected = controller.selectedPage.value;
+                            if (selected.endsWith("asy")) {
+                              Get.toNamed("/easy");
+                            }
+                            if (selected.endsWith("ustom")) {
+                              Get.snackbar("$selected",
+                                  "It is in production and will be coming soon :)");
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Text(
+                              'Start',
+                              style: GoogleFonts.josefinSans(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w700, //bold
+                                color: Colors.black,
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

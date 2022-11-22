@@ -14,6 +14,7 @@ class Index extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 'Solar System Sizing\n and Quotations',

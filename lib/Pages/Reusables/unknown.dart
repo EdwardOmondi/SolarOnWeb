@@ -10,25 +10,22 @@ class UnknownPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return StandardPage(
         crossAxisAlignment: CrossAxisAlignment.start,
-        pageBody: SizedBox(
-          height: Get.height - 100,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 16 * 3,
+        pageBody: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 16 * 3,
+            ),
+            Text(
+              'Sorry. Page not found.',
+              style: GoogleFonts.josefinSans(
+                fontSize: 32,
+                height: 2,
+                fontWeight: FontWeight.w700, //bold
+                color: Colors.black,
               ),
-              Text(
-                'Sorry. Page not found.',
-                style: GoogleFonts.josefinSans(
-                  fontSize: 32,
-                  height: 2,
-                  fontWeight: FontWeight.w700, //bold
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ));
   }
 }

@@ -26,7 +26,9 @@ class StandardPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: pageBody,
+                    child: SizedBox(
+                        height: MediaQuery.of(context).size.height - 100,
+                        child: pageBody),
                   ),
                   Footer(),
                 ],

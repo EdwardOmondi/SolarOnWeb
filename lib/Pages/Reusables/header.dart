@@ -85,7 +85,7 @@ class Header extends StatelessWidget {
           ),
           TextButton(
             onPressed: () {
-              Get.toNamed("/");
+              Get.offAllNamed("/");
             },
             child: Text(
               'SolarOn',
