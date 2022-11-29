@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:web/Pages/Reusables/standard_page.dart';
 import 'package:web/reusables.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SystemResultsPage extends GetView<SystemResultPageController> {
   SystemResultsPage({super.key});
@@ -36,13 +37,14 @@ class SystemResultsPage extends GetView<SystemResultPageController> {
       pw = 300;
       nob =
           (Get.arguments["wattHours"] * da * (1 + bdf) / (dod * il * sv)) / bs;
+
       inverterNo = (Get.arguments["watts"] / 1000);
     } else if (Get.arguments["watts"] > 1000 &&
         Get.arguments["watts"] <= 2400) {
       sv = 24;
       nob =
           (Get.arguments["wattHours"] * da * (1 + bdf) / (dod * il * sv)) / bs;
-      if (nob % 2 != 0) {
+      if (nob.ceil() % 2 != 0) {
         nob += 1;
       }
       inverterNo = (Get.arguments["watts"] / 2400);
@@ -104,19 +106,10 @@ class SystemResultsPage extends GetView<SystemResultPageController> {
             children: [
               Obx(
                 () {
-                  var text = Text(
-                    "Panels: Kshs. ${formatCurrency.format(controller.panelPrice.value)}\n"
-                    "Inverters: Kshs. ${formatCurrency.format(controller.inverterPrice.value)}\n"
-                    "Batteries: Kshs. ${formatCurrency.format(controller.batteryPrice.value)}\n"
-                    "Total: Kshs. ${formatCurrency.format(controller.panelPrice.value + controller.inverterPrice.value + controller.batteryPrice.value)}",
-                    style: GoogleFonts.lato(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500, //bold
-                      color: kBlackColor,
-                      height: 2,
-                    ),
-                  );
                   return Visibility(
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
                     visible: controller.visibility.value,
                     child: Container(
                       padding: const EdgeInsets.all(32.0),
@@ -127,31 +120,69 @@ class SystemResultsPage extends GetView<SystemResultPageController> {
                           color: kGoldColor,
                         ),
                       ),
-                      child: RichText(
-                        text: TextSpan(
-                          text:
-                              "Panels: Kshs. ${formatCurrency.format(controller.panelPrice.value)}\n"
-                              "Inverters: Kshs. ${formatCurrency.format(controller.inverterPrice.value)}\n"
-                              "Batteries: Kshs. ${formatCurrency.format(controller.batteryPrice.value)}\n",
-                          style: GoogleFonts.lato(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500, //bold
-                            color: kBlackColor,
-                            height: 2,
-                          ),
-                          children: <TextSpan>[
-                            TextSpan(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          RichText(
+                            text: TextSpan(
                               text:
-                                  "Total: Kshs. ${formatCurrency.format(controller.panelPrice.value + controller.inverterPrice.value + controller.batteryPrice.value)}",
+                                  "Panels: Kshs. ${formatCurrency.format(controller.panelPrice.value)}\n"
+                                  "Inverters: Kshs. ${formatCurrency.format(controller.inverterPrice.value)}\n"
+                                  "Batteries: Kshs. ${formatCurrency.format(controller.batteryPrice.value)}\n"
+                                  "Installation: Kshs. ${formatCurrency.format(controller.installationCosts.value)}\n",
                               style: GoogleFonts.lato(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700, //bold
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500, //bold
                                 color: kBlackColor,
                                 height: 2,
                               ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text:
+                                      "Total: Kshs. ${formatCurrency.format(controller.totalCost.value)}",
+                                  style: GoogleFonts.lato(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700, //bold
+                                    color: kBlackColor,
+                                    height: 2,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              // fixedSize: Size(154, 40),
+                              shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.circular(41), // <-- Radius
+                              ),
+                            ),
+                            // onPressed: () => launch("tel://+254701088334"),
+                            onPressed: () {
+                              Get.defaultDialog(
+                                  title: "Contact details",
+                                  middleText: "+254 701 088 334\n"
+                                      "edward@mmw.co.ke\n"
+                                      "Edward");
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Text(
+                                "Order now",
+                                style: GoogleFonts.josefinSans(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w700, //bold
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   );
@@ -199,7 +230,16 @@ class SystemResultsPage extends GetView<SystemResultPageController> {
                       ),
                     ),
                     onPressed: () {
-                      controller.switchView(panelsNo, nob, inverterNo);
+                      controller.switchView(
+                        noOfPanels: panelsNo.ceil(),
+                        noOfBatteries: nob.ceilToDouble(),
+                        panelWattage: pw,
+                        noOfInverters: inverterNo.ceil(),
+                        batteryRating: bs, //Ah
+                        inverterSize: Get.arguments["watts"] * 1.5 < 5000
+                            ? (Get.arguments["watts"] * 1.5).ceil()
+                            : 5000,
+                      );
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -313,13 +353,32 @@ class SystemResultPageController extends GetxController {
   RxDouble panelPrice = 0.0.obs;
   RxDouble inverterPrice = 0.0.obs;
   RxDouble batteryPrice = 0.0.obs;
+  RxDouble installationCosts = 0.0.obs;
+  RxDouble totalCost = 0.0.obs;
 
-  switchView(double noOfPanels, double noOfBatteries, double noOfInverters) {
+  switchView({
+    required int noOfPanels,
+    required double panelWattage,
+    required double noOfBatteries,
+    required double batteryRating,
+    required int noOfInverters,
+    required double inverterSize,
+  }) {
     visibility.value = !visibility.value;
     if (visibility.value) {
       buttonText.value = "Hide quotation";
     } else {
       buttonText.value = "Get quotation";
     }
+
+    panelPrice.value = noOfPanels * panelWattage * 50;
+    inverterPrice.value = noOfInverters * inverterSize * 22.82541667;
+    batteryPrice.value = noOfBatteries * batteryRating * 240.0807292;
+    installationCosts.value =
+        (panelPrice.value + inverterPrice.value + batteryPrice.value) / 10;
+    totalCost.value = panelPrice.value +
+        inverterPrice.value +
+        batteryPrice.value +
+        installationCosts.value;
   }
 }

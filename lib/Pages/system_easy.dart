@@ -304,7 +304,7 @@ class SystemEasyPageController extends GetxController {
 
 class AppliancesController extends GetxController {
   List<Appliance> appliances = [
-    Appliance(item: "l", qty: 11, powerRating: 11, time: 11)
+    // Appliance(item: "l", qty: 11, powerRating: 11, time: 11)
   ];
   addApliance(Appliance appliance) {
     appliances.add(appliance);
