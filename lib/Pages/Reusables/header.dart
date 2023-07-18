@@ -69,59 +69,94 @@ class Header extends StatelessWidget {
         }
         break;
     }
-
-    return Padding(
-      padding:
-          const EdgeInsets.only(left: 50.0, right: 50, top: 40, bottom: 20),
-      child: Row(
-        children: [
-          Image.asset(
-            'img/SolarOnLogoNoBg.png',
-            fit: BoxFit.contain,
-            height: 40,
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          TextButton(
-            onPressed: () {
-              Get.offAllNamed("/");
-            },
-            child: Text(
-              'SolarOn',
-              style: GoogleFonts.josefinSans(
-                fontSize: 32,
-                fontWeight: FontWeight.w700, //bold
-                color: Colors.black,
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    double deviceWidth = mediaQuery.size.width;
+    if (deviceWidth < 768) {
+      return Padding(
+        padding:
+            const EdgeInsets.only(left: 50.0, right: 50, top: 40, bottom: 20),
+        child: Row(
+          children: [
+            Expanded(child: Container()),
+            Image.asset(
+              'img/SolarOnLogoNoBg.png',
+              fit: BoxFit.contain,
+              height: 30,
+            ),
+            SizedBox(
+              width: 8,
+            ),
+            TextButton(
+              onPressed: () {
+                Get.offAllNamed("/");
+              },
+              child: Text(
+                'SolarOn',
+                style: GoogleFonts.josefinSans(
+                  fontSize: 28,
+                  fontWeight: FontWeight.w700, //bold
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
-          Expanded(child: Container()),
-          HeaderTab(
-            title: "Home",
-            textStyle: homeTextStyle,
-            onPressed: () {
-              Get.toNamed("/");
-            },
-          ),
-          HeaderTab(
-            textStyle: contactUsTextStyle,
-            title: "Contact Us",
-            onPressed: () {
-              Get.toNamed("/contact");
-            },
-          ),
-          HeaderTab(
-            textStyle: designTextStyle,
-            title: "Design",
-            onPressed: () {
-              // Get.to(SystemSelectPage());
-              Get.toNamed("/design");
-            },
-          ),
-        ],
-      ),
-    );
+            Expanded(child: Container()),
+          ],
+        ),
+      );
+    } else {
+      return Padding(
+        padding:
+            const EdgeInsets.only(left: 50.0, right: 50, top: 40, bottom: 20),
+        child: Row(
+          children: [
+            Image.asset(
+              'img/SolarOnLogoNoBg.png',
+              fit: BoxFit.contain,
+              height: 40,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            TextButton(
+              onPressed: () {
+                Get.offAllNamed("/");
+              },
+              child: Text(
+                'SolarOn',
+                style: GoogleFonts.josefinSans(
+                  fontSize: 32,
+                  fontWeight: FontWeight.w700, //bold
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Expanded(child: Container()),
+            HeaderTab(
+              title: "Home",
+              textStyle: homeTextStyle,
+              onPressed: () {
+                Get.toNamed("/");
+              },
+            ),
+            HeaderTab(
+              textStyle: contactUsTextStyle,
+              title: "Contact Us",
+              onPressed: () {
+                Get.toNamed("/contact");
+              },
+            ),
+            HeaderTab(
+              textStyle: designTextStyle,
+              title: "Design",
+              onPressed: () {
+                // Get.to(SystemSelectPage());
+                Get.toNamed("/design");
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 

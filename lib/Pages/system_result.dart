@@ -60,7 +60,7 @@ class SystemResultsPage extends GetView<SystemResultPageController> {
     }
     panelsNo = Get.arguments["wattHours"] / (msy * be * cce * ie * dbp) / pw;
     final formatCurrency =
-        new NumberFormat.currency(locale: "en_US", symbol: "");
+         NumberFormat.currency(locale: "en_US", symbol: "");
 
     return StandardPage(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -145,7 +145,7 @@ class SystemSelectPage extends GetView<SystemSelectPageController> {
                               Get.toNamed("/easy");
                             }
                             if (selected.endsWith("ustom")) {
-                              Get.snackbar("$selected",
+                              Get.snackbar(selected,
                                   "It is in production and will be coming soon :)");
                             }
                           },

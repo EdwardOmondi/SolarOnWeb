@@ -8,6 +8,8 @@ class Index extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MediaQueryData mediaQuery = MediaQuery.of(context);
+    double deviceWidth = mediaQuery.size.width;
     return StandardPage(
       crossAxisAlignment: CrossAxisAlignment.center,
       pageBody: Row(
@@ -19,7 +21,11 @@ class Index extends StatelessWidget {
               Text(
                 'Solar System Sizing\n and Quotations',
                 style: GoogleFonts.josefinSans(
-                  fontSize: 60,
+                  fontSize: deviceWidth < 426
+                      ? 30
+                      : deviceWidth < 769
+                          ? 45
+                          : 60,
                   fontWeight: FontWeight.w700, //bold
                   color: Colors.black,
                 ),
@@ -31,7 +37,11 @@ class Index extends StatelessWidget {
               Text(
                 'Get a solar system that’s tailored \nto your needs',
                 style: GoogleFonts.lato(
-                  fontSize: 32,
+                  fontSize: deviceWidth < 426
+                      ? 16
+                      : deviceWidth < 769
+                          ? 24
+                          : 32,
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
                 ),
@@ -52,11 +62,21 @@ class Index extends StatelessWidget {
                   Get.toNamed("/design");
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(24.0),
+                  padding: EdgeInsets.all(
+                    deviceWidth < 426
+                        ? 12
+                        : deviceWidth < 769
+                            ? 16
+                            : 24,
+                  ),
                   child: Text(
                     'Design',
                     style: GoogleFonts.josefinSans(
-                      fontSize: 32,
+                      fontSize: deviceWidth < 426
+                          ? 16
+                          : deviceWidth < 769
+                              ? 24
+                              : 32,
                       fontWeight: FontWeight.w700, //bold
                       color: Colors.black,
                     ),
@@ -67,7 +87,7 @@ class Index extends StatelessWidget {
           ),
           Image.asset(
             'img/house1.png',
-            fit: BoxFit.contain,
+            fit: BoxFit.fitWidth,
             height: MediaQuery.of(context).size.height - 100,
           ),
         ],
